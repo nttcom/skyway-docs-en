@@ -17,7 +17,7 @@
       <h2>Setup</h2>
       <h3>1. Include the Javascript client</h3>
       <p>Add the PeerJS client library to your webpage.</p>
-      <pre>&lt;script src="https://skyway.io/dist/v2/0.3/peer.min.js"&gt;&lt;/script&gt;</pre>
+      <pre>&lt;script src="https://skyway.io/dist/0.3/peer.min.js"&gt;&lt;/script&gt;</pre>
       <p>If you prefer, you can host it yourself: <a download
         href="https://skyway.io/dist/0.3/peer.js">peer.js</a>, <a download
       href="https://skyway.io/dist/0.3/peer.min.js">peer.min.js</a>, or <a
@@ -103,6 +103,18 @@ var call = peer.call('dest-peer-id',
 });</pre>
       <p>Read the <a href="#mediaconnection">MediaConnection API reference</a> for complete details on its methods and events.</p>
 
+      <h2>SkyWay Rest API</h2>
+      <h3>listAllPeers()<APIKEY></h3>
+      <p>Gets a list of active PeerID's connecting with the API key.</p>
+      <pre>peer.listAllPeers(function(list){
+      // e.g. Add retrieved Peer ID list to userList array.
+    for(var cnt = 0;cnt < list.length;cnt++){
+        userList.push(list[cnt]);
+    }
+});
+</pre>
+      <p>The SkyWay Rest API can only be accessed from the domain registered with the API key.</p>
+
       <h2>Common questions</h2>
 
         <h3>What kind of data can I send?</h3>
@@ -167,7 +179,8 @@ var peer = new Peer({
           IDs, thus eliminating the RTT for retrieving an ID from the server.</p>
 
         <h3>More questions?</h3>
-          <p>Discuss SkyWay on our <a href="https://groups.google.com/forum/#!forum/skywayjs">Google Group</a>.</p>
+      <p><a href="https://groups.google.com/forum/#!forum/skywayjs">Discuss SkyWay on SkyWay Technical Forum Google Group.</a></p>
+      <p><a href="https://groups.google.com/forum/?fromgroups#!forum/peerjs">Discuss PeerJS on PeerJS Google Group.</a></p>
         <h3>Disclaimer</h3>
           <p>This document is based on <a href="http://peerjs.com/docs/">http://peerjs.com/docs/</a> and provides additional information necessary to use NTT Communication's SkyWay service. We cannot respond to inquiries regarding the original document.<br><br></p>
 
