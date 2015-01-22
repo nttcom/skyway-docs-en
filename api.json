@@ -35,12 +35,18 @@
             "name": "secure",
             "type": "boolean",
             "tags": ["beta (0.3.0)"],
-            "description": "<code>true</code> if you're using SSL.<span class='tip'>Note that our cloud-hosted server and assets may not support SSL.</span>"
+            "description": "<code>true</code> if you're using SSL. Defaults to true since skyway.io uses SSL."
+          },
+          {
+            "name": "turn",
+            "type": "boolean",
+            "tags": ["skyway"],
+            "description": "<code>true</code> if you're using SkyWay's TURN server. Defaults to <code>true</code>. You must apply here to use this feature."
           },
           {
             "name": "config",
             "type": "object",
-            "description": "Configuration hash passed to RTCPeerConnection. This hash contains any custom ICE/TURN server configuration. Defaults to <code>{ 'iceServers': [{ 'url': 'stun:stun.skyway.io:3478' }] }</code>"
+            "description": "Configuration hash passed to RTCPeerConnection. This hash contains any custom ICE/TURN server configuration. Defaults to <code>{ 'iceServers': [{ 'url': 'stun:stun.skyway.io:3478' }] }</code>. It is not necessary to set iceServers if you're using SkyWay's TURN server."
           },
           {
             "name": "debug",
@@ -238,6 +244,14 @@
     "type": "method",
     "snippet": "peer.destroy();",
     "description": "Close the connection to the server and terminate all existing connections. <a href='#peerdestroyed'><code>peer.destroyed</code></a> will be set to <code>true</code>.<span class='warn'>This cannot be undone; the respective peer object will no longer be able to create or receive any connections, its ID will be forfeited on the (cloud) server, and all of its data and media connections will be closed.</span>"
+  },
+
+  {
+    "name": "peer.listAllPeers",
+    "tags": ["skyway"],
+    "type": "method",
+    "snippet": "peer.listAllPeers(function(list) { ... });",
+    "description": "Get an array of PeerIDs of users connected with the same API key."
   },
 
   {
