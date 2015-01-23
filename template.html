@@ -139,8 +139,7 @@ conn.send({
           <p>A small percentage of users are behind symmetric NATs. When two
           symmetric NAT users try to connect to each other, NAT traversal is
         impossible and no connection can be made. A workaround is to proxy
-      through the connection through a TURN server. The PeerServer cloud service does
-    not provide a TURN server. You'll have to find your own. If you wish to use SkyWay's TURN server, you can apply <a href='https://skyway.io/ds/turnrequest' target='_blank'>here</a>. You can pass a TURN
+      through the connection through a TURN server. You'll have to find your own. If you wish to use SkyWay's TURN server, you can apply <a href='https://skyway.io/ds/turnrequest' target='_blank'>here</a>. You can pass a TURN
   server into the <code>Peer</code> object options. This will allow your PeerJS app to work seamlessly for this situation.</p>
         <h3>How do I use a TURN server?</h3>
         <p>When creating your Peer object, pass in the ICE servers as the config key of the options hash.</p>
