@@ -1,0 +1,198 @@
+<div id="iOS">
+<section class="start">
+    <h1><a href="/skyway/">SkyWay iOS SDK</a> <span class="title">docs</span></h1>
+    <p><br>SkyWay simplifies peer-to-peer data, video, and audio calls using WebRTC."SkyWay iOS SDK" is a framework that enables using SkyWay in iOS apps.This guide will show you the basic concepts of the SkyWay iOS SDK. If
+      you learn better from seeing a working app, <a href="https://github.com/nttcom/SkyWay-iOS-Sample">see the examples</a></P>
+    <h2>Setup</h2>
+    <h3>1. Add required libraries and frameworks</h3>
+    <p>Add the following libraries and frameworks to your Xcode project.</p>
+    <pre>AudioToolbox.framework
+AVFoundation.framework
+CoreMedia.framework
+CoreGraphoics.framework
+Foundation.framework
+GLKit.framework
+SystemConfiguration.framework
+libc++.dylib
+libstdc++.6.0.9.dylib
+libsqlite3.dylib
+libicucore.dylib</pre>
+    <h3>2. Import SkyWay iOS SDK</h3>
+    <p>Add SkyWay.framework to your Xcode project and import header file.</p>
+    <pre>#import &lt;SkyWay/SKWPeer.h&gt;</pre>
+    <h3>3. Create the SKWPeer object</h3>
+    <p>The SKWPeer object is where we create and receive connections.</p>
+    <pre>SKWPeerOption* options = [[SKWPeerOption alloc] init];
+options.key = @"{APIKEY}";
+options.domain = @”{DOMAIN}”;
+SKWPeer* peer = [[SKWPeer alloc] initWithOptions:options];</pre>
+    <p>You can <a
+            href="http://nttcom.github.io/skyway/registration.html">sign up for your own free key</a>. You will need to register a domain when you sign up for an API key. You will only be able to use the API key from the registered domains.</p>
+
+    <p>You can also <a href="http://github.com/peers/peerjs-server">run your own PeerServer</a> for session metadata and candidate signaling, if you don't like the cloud.</p>
+    <p>We're now ready to start making connections!</p>
+
+    <h2>Usage</h2>
+    <p>Every SKWPeer object is assigned a random, unique ID when it's created.</p>
+      <pre>[peer on:SKW_PEER_EVENT_OPEN callback:^(NSObject* obj)
+{
+    if (YES == [obj isKindOfClass:[NSString class]])
+    {
+        NSString* ownId = (NSString *)obj;
+    }
+}];</pre>
+    <p>When we want to connect to another peer, we'll need to know their peer id.
+        Use the <a href="#skwpeer-listallpeers">listAllPeers</a> method of the SKWPeer class to get the remote PeerId or communicate PeerIds out of bound through some other method. Optionally, you can pass in your own IDs to the <a href="#skwpeer">SKWPeer constructor</a>.
+
+    <p>Read the <a href="#skwpeer">Peer API reference</a> for complete
+      information on its <a href="#skwpeeroption">options</a>, methods, <a href="#skwpeer-on">events</a>, and <a href="#skwpeer-on-event-skw_peer_event_error">error handling</a>.</p>
+
+    <h3>Data connections</h3>
+    <p>Start a data connection by calling <code>connectWithId</code> with the peer ID of the destination peer. Anytime another peer attempts to connect to your peer
+      ID, you'll receive a <code>SKW_PEER_EVENT_CONNECTION</code> event. </p>
+    <div class="pre-title">Start connection</div>
+    <pre>SKWDataConnection* dataConnection = [peer connectWithId:'dest-peer-id'];</pre>
+    <div class="pre-title">Receive connection</div>
+    <pre>[peer on:SKW_PEER_EVENT_CONNECTION callback:^(NSObject* dataConnection){ ... }];</pre>
+    <p><code>connectWithId</code> method of the SKWPeer class and the callback of the
+      <code>SKW_PEER_EVENT_CONNECTION</code> event will both provide a
+      <code>SKWDataConnection</code> object. This object will allow you to send and receive data:</p>
+      <pre>[dataConnection on:SKW_DATACONNECTION_EVENT_OPEN callback:^(NSObject* obj){ ... }];
+[dataConnection on:SKW_DATACONNECTION_EVENT_DATA callback:^(NSObject* obj)
+{
+    // Receive String messages
+    NSString* strData = nil;
+    if ([obj isKindOfClass:[NSString class]])
+    {
+        strData = (NSString *)obj;
+    }
+}];
+// Send messages
+BOOL bResult = [dataConnection send:@"Hello SkyWay!"];
+if (NO == bResult)
+{
+    // Failed
+}
+else
+{
+    // Succeeded
+}
+    </pre>
+    <p>Read the <a href="#skwdataconnection">DataConnection API reference</a> for complete details on its methods and events.</p>
+    <h3>Video/audio calls</h3>
+    <p>Call another peer by calling <code>callWithId</code> with the peer ID of the destination peer. When a peer calls you, the <code>SKW_PEER_EVENT_CALL</code> event is emitted.</p>
+    <p>Unlike data connections, when receiving a <code>SKW_PEER_EVENT_CALL</code> event, the call must be answered or no connection is established.</p>
+    <div class="pre-title">Start call</div>
+    <pre>SKWMediaConnection* mediaConnection = [peer callWithId:dest-peer-id stream:mediaStream];</pre>
+    <div class="pre-title">Answer call</div>
+    <pre>[peer on:SKW_PEER_EVENT_CALL callback:^(NSObject* mediaConnection){
+    [mediaConnection answer:mediaStream];
+}];</pre>
+    <p>When calling or answering a call, a MediaStream should be provided.
+        MediaStream represents the local video (webcam) or audio stream and can be
+      obtained SKWNavigator <a href="#skwnavigator-getusermedia"><code>getUserMedia</code></a> method. When answering a call, the MediaStream is optional and if none is provided then a one-way call is established. Once the call is established, its <code>isOpen</code> property is set to YES.</p>
+
+    <p><code>callWithId</code> method of the SKWPeer class and the callback of the <code>SKW_PEER_EVENT_CALL</code> event provide a MediaConnection object. The MediaConnection object itself emits a <code>SKW_MEDIACONNECTION_EVENT_STREAM</code> event whose callback includes the video/audio stream of the other peer.</p>
+      <pre>[mediaConnection on:SKW_MEDIACONNECTION_EVENT_STREAM callback:^(NSObject* stream)
+{
+    // `stream` is the SKWMediaStream of the remote peer.
+    // Here you'd add it to SKWVideo.
+}];</pre>
+    <p>Read the <a href="#skwmediaconnection">MediaConnection API reference</a> for complete details on its methods and events.</p>
+
+    <h2>SkyWay RestAPI</h2>
+    <h3>listAllPeers</h3>
+    <p>Gets a list of active PeerID's connecting with the API key.<p>
+      <pre>[peer listAllPeers:^(NSArray* aryPeers)
+{
+    for (NSString* strPeer in aryPeers)
+    {
+        ...
+    }
+}];
+</pre>
+
+    <p>The SkyWay Rest API can only be accessed from the domain registered with the API key.</p>
+
+    <h2>FAQ</h2>
+
+    <h3>What kind of data can I send?</h3>
+
+    <p>When <a href="#skwconnectoption-serialization">serialization</a> is set to binary or binary-utf8, <a href="https://github.com/gabriel/MPMessagePack">MessagePack</a> serialization format is used. You can easily send NSData*, NSString*, NSNumber*, NSDictionary*, NSArray*. It is not possible for an NSDictionary or NSArray to contain another NSDictionary/NSArray.</p>
+          <pre>
+NSDictionary* dctData = @{
+    @"1": @"one",
+    @"2": @"two",
+    @"3": @"three",
+    @"4": @"four",
+    @"5": @"five",
+    };
+BOOL bResult = [_dataConnection send:dctData];</pre>
+<p>Depending on the value of serialization, the data that can be sent between each of the platforms (JavaScript, iOS, and Android) changes. See <a href='http://nttcom.github.io/skyway/docs/serialization.md'>this chart</a> for details.</p>
+
+    <h3>Are there any caveats?</h3>
+
+    <p>A small percentage of users are behind symmetric NATs. When two symmetric NAT users try to connect to each other, NAT traversal is impossible and no connection can be made. A workaround is to proxy through the connection through a TURN server. You'll have to find your own. If you wish to use SkyWay's TURN server, you can apply <a href='https://skyway.io/ds/turnrequest' target='_blank'>here</a>. You can pass a TURN server into the <code>Peer</code> object options. This will allow your PeerJS app to work seamlessly for this situation.</p>
+    <h3>How do I use a TURN server?</h3>
+    <p>When creating your Peer object, pass in the ICE servers as the config key of the options hash.</p>
+<pre>
+SKWIceConfig* configStun = [[SKWIceConfig alloc] init];
+configStun.url = @"stun:stun.skyway.io:3478";
+
+SKWIceConfig* configTurn = [[SKWIceConfig alloc] init];
+configTurn.url = @"turn:homeo@turn.bistri.com:80";
+configTurn.credential = @"homeo";
+// Sample servers, please use appropriate ones
+
+SKWPeerOption* options = [[SKWPeerOption alloc] init];
+option.config = @[configStun,configTurn];
+
+SKWPeer* peer = [[SKWPeer alloc] initWithOptions:options];
+</pre>
+    <p>This option doesn't need to be set if you're using SkyWay's TURN server.</p>
+
+         <h3>What if my peer has not yet connected to the server when I attempt
+          to connect to it?</h3>
+
+          <p>When you try to connect to a peer, PeerServer will hold a
+          connection offer for up to 5 seconds before rejecting it. This is useful if you want to reconnect to a peer as it disconnects and reconnects rapidly between web pages.</p>
+
+        <h3>Why am I unable to connect?</h3>
+          <p>You could be behind a symmetric NAT, in which case you'll need to set up a TURN server.</p>
+
+        <h3>What about latency/bandwidth?</h3>
+
+          <p>Data sent between the two peers do not touch any other servers except for use of turn server, so the connection speed is limited only by the upload and download rates of the two peers. This also means you don't have the additional latency of an intermediary server.</p>
+          <p>The latency to establish a connection can be split into two
+          components:
+          the brokering of data and the identification of clients. PeerJS has been
+          designed to minimize the time you spend in these two areas. For
+          brokering, data is sent through an XHR streaming request before a WebSocket
+          connection is established, then through WebSockets. For client
+          identification, we provide you the ability to pass in your own peer
+          IDs, thus eliminating the RTT for retrieving an ID from the server.</p>
+
+    <h3>Supported OS</h3>
+    <p>iOS 7+</p>
+
+    <h3>Supported devices</h3>
+    <p>iPhone 5+、iPodTouch 5+、iPad 2+</p>
+
+    <h3>More questions?</h3>
+    <p><a href="https://groups.google.com/forum/#!forum/skywayjs">Discuss SkyWay on SkyWay Technical Forum Google Group.</a></p>
+    <h3>Disclaimer</h3>
+    <p>This document is based on <a href="http://peerjs.com/docs/">http://peerjs.com/docs/</a> and provides additional information necessary to use NTT Communication's SkyWay service. We cannot respond to inquiries regarding the original document.<br><br></p>
+
+</section>
+
+<header class="left">
+    <h2>API Reference<a class="hide icon">&laquo;</a><a class="show icon">&raquo;</a></h2>
+</header>
+<header class="right">
+    <h2>Getting Started</h2>
+</header>
+
+<section class="api">
+    {{{html_iOS}}}
+</section>
+</div>
