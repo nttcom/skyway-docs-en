@@ -287,10 +287,10 @@
         "name": ".send",
         "type": "method",
         "snippet": "dataConnection.send(data);",
-        "description": "<code>data</code> is serialized by BinaryPack by default and sent to the remote peer.",
+        "description": "<code>data</code> is serialized by BinaryPack by default and sent to the remote peer.Depending on the value of serialization, the data that can be sent between each of the platforms (JavaScript, iOS, and Android) changes. See <a href='http://nttcom.github.io/skyway/docs/serialization.md'>this chart</a> for details.",
         "children": {
           "name": "data",
-          "description": "You can send any type of data, including objects, strings, and blobs."
+          "description": "The data to send."
         }
       },
       {

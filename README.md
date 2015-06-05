@@ -1,6 +1,9 @@
 ## PeerJS Documentation
 
-<a href="http://nttcom.github.io/skyway/en/docs">Check out our documentation here.</a>
+We've moved! <a href="http://nttcom.github.io/skyway/docs">Check out our new
+documentation.</a>
+
+## PeerJS links
 
 ###[Browser compatibility and limitations](http://peerjs.com/status)
 
