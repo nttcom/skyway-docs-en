@@ -725,6 +725,60 @@
             "description": "The index of the AudioTrack. AudioTrack indexes are 0 or greater."
           }
         ]
+      },
+      {
+        "name": "setCameraPosition",
+        "type": "METHOD",
+        "snippet": "BOOL result = [stream setCameraPosition:pos];",
+        "description": "In case of using iOS device's local media stream, set used camera",
+        "children": [
+          {
+            "name": "pos",
+            "type": "SKWCameraPositionEnum",
+            "description": "Set used camera position.",
+            "children":[
+              {
+                "name": "SKW_CAMERA_POSITION_UNSPECIFIED",
+                "description": "Use camera found first. The order depends on the system."
+              },
+              {
+                "name": "SKW_CAMERA_POSITION_BACK",
+                "description": "Use back camera."
+              },
+              {
+                "name": "SKW_CAMERA_POSITION_FRONT",
+                "description": "Use front camera."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getCameraPosition",
+        "type": "METHOD",
+        "snippet": "SKWCameraPositionEnum pos = [stream getCameraPosition];",
+        "description": "In case of using iOS device's local media stream, get used camera",
+        "children": [
+          {
+            "name": "pos",
+            "type": "SKWCameraPositionEnum",
+            "description": "Get used camera position.",
+            "children":[
+              {
+                "name": "SKW_CAMERA_POSITION_UNSPECIFIED",
+                "description": "Camera position is unspecified."
+              },
+              {
+                "name": "SKW_CAMERA_POSITION_BACK",
+                "description": "Camera position is back."
+              },
+              {
+                "name": "SKW_CAMERA_POSITION_FRONT",
+                "description": "Camera position is front."
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -845,47 +899,47 @@
         "children": [
           {
             "name": "SKW_CAMERA_POSITION_UNSPECIFIED",
-            "description": "Use camera found first.The order depends on system."
+            "description": "Use camera found first. The order depends on the system."
           },
           {
             "name": "SKW_CAMERA_POSITION_BACK",
-            "description": "Use camera outside. If it's not found, use camera found first."
+            "description": "Use back camera. If it's not found, use camera found first."
           },
           {
             "name": "SKW_CAMERA_POSITION_FRONT",
-            "description": "Use camera inside. If it's not found, use camera found first."
+            "description": "Use front camera. If it's not found, use camera found first."
           }
         ]
       },
       {
         "name": "maxWidth",
         "type": "NSUInteger",
-        "description": "Set the width pixel maximum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>640</code>."
+        "description": "Set the width pixel maximum limit. Defaults to <code>640</code>.<br>Valid values for maxWidth, minWidth, maxHeight, minHeight are shown below. In case of setting invalid value or combination, values will be set to defaults.<span class='tip'>max (Width x Height): 640x480, 800x600, 960x540, 1280x720<br>min (Width x Height): 192x144, 352x288, 512x384, 640x480</span>"
       },
       {
         "name": "minWidth",
         "type": "NSUInteger",
-        "description": "Set the width pixel minimum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>0</code>."
+        "description": "Set the width pixel minimum limit. Defaults to <code>192</code>."
       },
       {
         "name": "maxHeight",
         "type": "NSUInteger",
-        "description": "Set the height pixel maximum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>640</code>."
+        "description": "Set the height pixel maximum limit. Defaults to <code>480</code>."
       },
       {
         "name": "minHeight",
         "type": "NSUInteger",
-        "description": "Set the height pixel minimum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>0</code>."
+        "description": "Set the height pixel minimum limit. Defaults to <code>144</code>."
       },
       {
         "name": "maxFrameRate",
         "type": "NSUInteger",
-        "description": "Set the frame rate maximum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>10</code>."
+        "description": "Set the frame rate maximum limit. Defaults to <code>10</code>."
       },
       {
         "name": "minFrameRate",
         "type": "NSUInteger",
-        "description": "Set the frame rate minimum limit. If you set <code>0</code>, it depends on WebRTC engine. Defaults to <code>0</code>."
+        "description": "Set the frame rate minimum limit. Defaults to <code>2</code>."
       }
     ]
   }
