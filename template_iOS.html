@@ -152,7 +152,7 @@ option.config = @[configStun,configTurn];
 
 SKWPeer* peer = [[SKWPeer alloc] initWithOptions:options];
 </pre>
-    <p>This option doesn't need to be set if you're using SkyWay's TURN server.</p>
+    <p>If you’re using the SkyWay TURN server, set SKWPeerOption.turn to YES. SKWIceConfig doesn’t have to be set in this case.</p>
 
          <h3>What if my peer has not yet connected to the server when I attempt
           to connect to it?</h3>
