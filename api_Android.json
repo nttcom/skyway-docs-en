@@ -708,6 +708,12 @@
             "description": "The index of the AudioTrack. AudioTrack indexes are 0 or greater."
           }
         ]
+      },
+      {
+        "name": "switchCamera",
+        "type": "METHOD",
+        "snippet": "Boolean enable = stream.switchCamera();",
+        "description": "Change camera if possible while using the local media stream.Returns <code>true</code> if it successfully changes camera, <code>false</code> otherwise."
       }
     ]
   },

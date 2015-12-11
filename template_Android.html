@@ -19,7 +19,7 @@
 </pre>
     <h3>2. Import SkyWay Android SDK</h3>
     <p>Add SkyWay.aar to your application and import class files.</p>
-    <pre>#import &lt;io.skyway.Peer.*&gt;</pre>
+    <pre>#import io.skyway.Peer.*</pre>
     <h3>3. Create the Peer object</h3>
     <p>The Peer object is where we create and receive connections.</p>
     <pre>PeerOption options = new PeerOption();
@@ -151,7 +151,7 @@ options.config = {configStun,configTurn};
 
 Peer peer = new Peer(options);
 </pre>
-    <p>This option doesn't need to be set if you're using SkyWay's TURN server.</p>
+    <p>If you’re using the SkyWay TURN server, set PeerOption.turn to true. IceConfig doesn’t have to be set in this case.</p>
 
          <h3>What if my peer has not yet connected to the server when I attempt
           to connect to it?</h3>
