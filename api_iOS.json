@@ -324,6 +324,7 @@
     "children": [
       {
         "name": "metadata",
+        "type": "NSString",
         "description": "Any type of metadata associated with the connection, passed in by whoever initiated the connection."
       }
     ]
@@ -509,7 +510,7 @@
       },
       {
         "name": "metadata",
-        "type": "NSObject",
+        "type": "NSString",
         "description": "Any type of metadata associated with the connection, passed in by whoever initiated the connection."
       },
       {
@@ -626,7 +627,7 @@
       },
       {
         "name": "metadata",
-        "type": "NSObject",
+        "type": "NSString",
         "description": "Any type of metadata associated with the connection, passed in by whoever initiated the connection."
       },
       {
