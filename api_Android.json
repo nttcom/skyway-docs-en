@@ -203,7 +203,7 @@
         "name": "turn",
         "optional": true,
         "type": "Boolean",
-        "description": "<code>true</code> if you're using SkyWay's TURN server. Defaults to <code>false</code>. You must apply <a href='https://skyway.io/ds/turnrequest' target='_blank'>here</a> to use this feature."
+        "description": "<code>true</code> if you're using SkyWay's TURN server. Defaults to <code>true</code>. You must apply <a href='https://skyway.io/ds/turnrequest' target='_blank'>here</a> to use this feature."
       },
       {
         "name": "config",
