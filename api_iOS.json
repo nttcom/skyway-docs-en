@@ -779,6 +779,12 @@
             ]
           }
         ]
+      },
+      {
+        "name": "switchCamera",
+        "type": "METHOD",
+        "snippet": "Bool result = [stream switchCamera];",
+        "description": "Change camera if possible while using iOS device's local media stream. Returns <code>true</code> if it successfully changes camera, <code>false</code> otherwise."
       }
     ]
   },
