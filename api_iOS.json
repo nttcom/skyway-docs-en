@@ -900,9 +900,24 @@
         "description": "Sets the audio. <code>YES</code> enable the audio, <code>NO</code> disable the audio. Defaults to <code>YES</code>."
       },
       {
+        "name": "cameraMode",
+        "type": "SKWCameraModeEnum",
+        "description": "Sets the camera mode. Defaults to <code>SKW_CAMERA_MODE_SWITCHABLE</code>.",
+        "children": [
+          {
+            "name": "SKW_CAMERA_MODE_SWITCHABLE",
+            "description": "You can change the camera during the transmission of the media stream."
+          },
+          {
+            "name": "SKW_CAMERA_MODE_ADJUSTABLE",
+            "description": "You can change the width/height property."
+          }
+        ]
+      },
+      {
         "name": "cameraPosition",
         "type": "SKWCameraPositionEnum",
-        "description": "Set camera. Defaults to SKW_CAMERA_POSITION_FRONT.",
+        "description": "Set camera. Defaults to SKW_CAMERA_POSITION_FRONT. Enable when the cameraMode is <code>SKW_CAMERA_MODE_ADJUSTABLE</code>.",
         "children": [
           {
             "name": "SKW_CAMERA_POSITION_UNSPECIFIED",
@@ -921,32 +936,22 @@
       {
         "name": "maxWidth",
         "type": "NSUInteger",
-        "description": "Set the width pixel maximum limit. Defaults to <code>640</code>.<br>Valid values for maxWidth, minWidth, maxHeight, minHeight are shown below. In case of setting invalid value or combination, values will be set to defaults.<span class='tip'>max (Width x Height): 640x480, 800x600, 960x540, 1280x720<br>min (Width x Height): 192x144, 352x288, 512x384, 640x480</span>"
+        "description": "Set the width pixel maximum limit. Defaults to <code>640</code>.<br>Valid values for maxWidth, minWidth, maxHeight, minHeight are shown below. In case of setting invalid value or combination, values will be set to defaults.<span class='tip'>max (Width x Height): 640x480, 352x288 <br>min (Width x Height): 192x144, 352x288, 512x384, 640x480</span>"
       },
       {
         "name": "minWidth",
         "type": "NSUInteger",
-        "description": "Set the width pixel minimum limit. Defaults to <code>192</code>."
+        "description": "Set the width pixel minimum limit. Defaults to <code>192</code>. Enable when the cameraMode is <code>SKW_CAMERA_MODE_ADJUSTABLE</code>."
       },
       {
         "name": "maxHeight",
         "type": "NSUInteger",
-        "description": "Set the height pixel maximum limit. Defaults to <code>480</code>."
+        "description": "Set the height pixel maximum limit. Defaults to <code>480</code>. Enable when the cameraMode is <code>SKW_CAMERA_MODE_ADJUSTABLE</code>."
       },
       {
         "name": "minHeight",
         "type": "NSUInteger",
-        "description": "Set the height pixel minimum limit. Defaults to <code>144</code>."
-      },
-      {
-        "name": "maxFrameRate",
-        "type": "NSUInteger",
-        "description": "Set the frame rate maximum limit. Defaults to <code>10</code>."
-      },
-      {
-        "name": "minFrameRate",
-        "type": "NSUInteger",
-        "description": "Set the frame rate minimum limit. Defaults to <code>2</code>."
+        "description": "Set the height pixel minimum limit. Defaults to <code>144</code>. Enable when the cameraMode is <code>SKW_CAMERA_MODE_ADJUSTABLE</code>."
       }
     ]
   }
